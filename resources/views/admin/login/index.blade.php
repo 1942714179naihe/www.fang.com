@@ -15,11 +15,8 @@
 <div class="loginWraper">
     <div id="loginform" class="loginBox">
         {{-- 显示表单验证错误信息 --}}
-       @if($errors->any())
-           @foreach($errors->all() as $error)
-               <li>{{$error}}</li>
-           @endforeach
-        @endif
+    @include('admin.public.msg')
+
 
         <form class="form form-horizontal" action="{{ route('admin.login') }}" method="post">
             {{-- laravel5.5--}}
@@ -33,14 +30,23 @@
                 </div>
             </div>
             <div class="row cl">
+                <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
+                <div class="formControls col-xs-8">
+                    <input name="email" value="" type="email" placeholder="邮箱" class="input-text size-L">
+                </div>
+            </div>
+            <div class="row cl">
                 <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60e;</i></label>
                 <div class="formControls col-xs-8">
-                    <input name="password" value="" type="text" placeholder="密码" class="input-text size-L">
+                    <input name="password" value="" type="password" placeholder="密码" class="input-text size-L">
                 </div>
             </div>
             <div class="row cl">
                 <div class="formControls col-xs-8 col-xs-offset-3">
-                    <input name="" type="submit" class="btn btn-success radius size-L" value="登录">
+                    {{--<input name="" type="submit" class="btn btn-success radius size-L" value="登录">--}}
+                    <input name="" type="submit" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
+                    <input name="" type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
+
                 </div>
             </div>
         </form>
