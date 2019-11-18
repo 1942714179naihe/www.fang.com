@@ -70,9 +70,10 @@
                         <td class="td-manage">
 
                              {{--<a href="{{ route('admin.user.edit',['id'=>$item->id]) }}" class="label label-secondary radius">修改</a>--}}
-
-                            <a href="{{ route('admin.user.edit',$item) }}" class="label label-secondary radius">修改</a>
-                            <a data-href="{{route('admin.user.destroy',$item)}}" class="label label-danger radius deluser">删除</a>
+                            {!! $item->editBtn('admin.user.edit') !!}
+                            {!! $item->delBtn('admin.user.destroy') !!}
+                            {{--<a href="{{ route('admin.user.edit',$item) }}" class="label label-secondary radius">修改</a>--}}
+                            {{--<a data-href="{{route('admin.user.destroy',$item)}}" class="label label-danger radius deluser">删除</a>--}}
                         </td>
                     </tr>
                 @endforeach

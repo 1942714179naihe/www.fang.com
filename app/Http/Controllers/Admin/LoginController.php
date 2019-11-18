@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 //引入邮件类
 use  Mail;
 use  Illuminate\Mail\Message;
-use Symfony\Component\VarDumper\Cloner\Data;
+
 
 class LoginController extends Controller
 {
@@ -19,13 +19,14 @@ class LoginController extends Controller
     //登录处理
     public  function  login(Request $request){
         $data = $this->validate($request,[
-            'email' => 'email|required',
+//            'email' => 'email|required',
             'username' => 'required',
             'password' => 'required',
         ]);
 //        $t = time();
 //        dump($t);die;
-
+//         $a = bcrypt('123456');
+//         dump($a);die;
 
 //        dump($request);die;
         //auth登录
@@ -39,14 +40,12 @@ class LoginController extends Controller
         }
 
 //        发邮件通知
-        Mail::send('admin.mailer.login',compact('data'),function (Message $message) use ($data){
-            //主题
-            $message->subject('登录用户通知');
-            //发给谁
-            $message->to($data['email'],$data['username'],$data['password']);
-        });
-
-
+//        Mail::send('admin.mailer.login',compact('data'),function (Message $message) use ($data){
+//            //主题
+//            $message->subject('登录用户通知');
+//            //发给谁
+//            $message->to($data['email'],$data['username'],$data['password']);
+//        });
 
         //跳转到后台页面
         return redirect(route('admin.index'));

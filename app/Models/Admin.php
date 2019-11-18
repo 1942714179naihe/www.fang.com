@@ -7,6 +7,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 //软删除 导入类
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+//引入按钮组trait
+use App\Models\Traits\Btn;
+
 /**
  * App\Models\Admin
  *
@@ -45,11 +48,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Admin withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Admin withoutTrashed()
  * @mixin \Eloquent
+ * @property-read \App\Models\Role $role
  */
 class Admin extends Authenticatable
 {
     //继承 trait
-    use  SoftDeletes;
+    use  SoftDeletes,Btn;
     //指定软删除字段 delete_at 数据表中的字段
     protected  $dates = ['deleted_at'];
 
@@ -60,5 +64,11 @@ class Admin extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
+    }
+
+    //用户与角色间的关系  属于
+    public function role()
+    {
+        return $this->belongsTo(Role::class,'role_id');
     }
 }

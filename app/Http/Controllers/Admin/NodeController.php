@@ -34,8 +34,10 @@ class NodeController extends BaseController
         //参数2 数组的下标
         $data = Node::where('pid',0)->pluck('name','id')->toArray();
 
-        array_unshift($data,'==顶级==');
-        return view('admin.node.create',compact('data'));
+        // 在数组顶部添加一个值
+        $data[0] = '==顶级==';
+        ksort($data);
+        return view('admin.node.create', compact('data'));
     }
 
     /**

@@ -55,6 +55,15 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
 
         //权限管理
         Route::resource('node','NodeController');
+
+
+        //路由的定义规则，越靠前越精准
+        Route::post('article/upfile','ArticleController@upfile')->name('article.upfile');
+        //文章的封面图片删除
+        Route::get('article/delfile','ArticleController@delfile')->name('article.delfile');
+        //文章管理
+        Route::resource('article','ArticleController');
+
     });
 
 

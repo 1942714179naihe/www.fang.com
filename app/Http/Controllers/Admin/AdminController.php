@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin;
+use App\Models\Role;
 use App\Models\Services\AdminService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -27,7 +28,10 @@ class AdminController extends BaseController
     }
     //添加用户显示
     public function create(){
-        return view('admin.admin.create');
+        //在添加用户显示中读取所有角色列表的信息
+        $roleData = Role::pluck('name','id');
+
+        return view('admin.admin.create',compact('roleData'));
     }
 //    添加用户处理
     public function store(Request $request)
@@ -36,7 +40,10 @@ class AdminController extends BaseController
             'username' => 'required|unique:admins,username',
             'truename' => 'required',
             'email' => 'nullable|email',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed',
+            'role_id' => 'required'
+        ],[
+            'role_id.required' => '角色必须勾选其中之一'
         ]);
         //获取数据
         $data = $request->except(['_token','password_confirmation']);
