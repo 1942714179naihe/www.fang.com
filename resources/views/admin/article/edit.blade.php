@@ -123,13 +123,15 @@
             // swf文件路径
             swf: '{{ staticAdminWeb() }}lib/webuploader/0.1.5/Uploader.swf',
             // 文件接收服务端
-            server: '{{ route('admin.article.upfile') }}',
+            server: '{{ route('admin.base.upfile') }}',
             // 选择文件的按钮
             pick: '#filePicker',
             // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
             resize: false,
             // 表单传额外值
-            formData: {_token: "{{ csrf_token() }}"},
+            formData: {_token: "{{ csrf_token() }}",
+            node:'articles'
+            },
             // 上传表单名称
             fileVal: 'file'
         });

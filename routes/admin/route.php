@@ -17,6 +17,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         Route::get('logout','IndexController@logout')->name('logout');
 
 
+        //文件上传
+        Route::post('base/upfile','BaseController@upfile')->name('base.upfile');
+
         //用户列表
         Route::get('user/index','AdminController@index')->name('user.index');
 
@@ -64,13 +67,15 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         //文章管理
         Route::resource('article','ArticleController');
 
+
+        //房源属性
+        Route::resource('fangattr','FangAttrController');
+
+
+        //房东管理
+        Route::resource('fangowner','FangOwnerController');
+
     });
-
-
-
-
-
-
 
 
 
