@@ -23,6 +23,7 @@ class CreateFangattrsTable extends Migration
             $table->timestamps();
             // 软删除
             $table->softDeletes();
+
         });
     }
 

@@ -46,4 +46,13 @@ class Fangattr extends Base
     {
         return $this->editBtn('admin.fangattr.edit'). ' '. $this->delBtn('admin.fangattr.destroy');
     }
+
+    //获取修改icon字段输出
+    public function getIconAttribute()
+    {
+        if (stristr($this->attributes['icon'],'http')){
+            return $this->attributes['icon'];
+        }
+        return self::$host . '/' . ltrim($this->attributes['icon'],'/');
+    }
 }

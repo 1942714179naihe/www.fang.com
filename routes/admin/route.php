@@ -6,6 +6,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
     // 后台登录处理
     Route::post('login', 'LoginController@login')->name('login');
 
+    //es操作路由
+    Route::get('esinitindex','EsController@initIndex')->name('initIndex');
 
     Route::group(['middleware' => ['checkadmin']],function(){
         //后台首页
@@ -72,9 +74,27 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         Route::resource('fangattr','FangAttrController');
 
 
+
+        //房东导出Excel
+        Route::get('fangowner/export','FangOwnerController@export')->name('fangowner.export');
         //房东管理
         Route::resource('fangowner','FangOwnerController');
 
+
+
+        //城市获取
+        Route::get('fang/city','FangController@getCity')->name('fang.city');
+        //房源管理
+        Route::resource('fang','FangController');
+
+        //预约管理
+        Route::resource('notice','NoticeController');
+
+        //租客列表
+        Route::resource('renting','RentingController');
+
+        //接口管理
+        Route::resource('apiuser','ApiuserController');
     });
 
 

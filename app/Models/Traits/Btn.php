@@ -12,8 +12,8 @@ namespace App\Models\Traits;
 trait Btn
 {
 private function checkAuth(string  $routeName){
-//    在中间键中得到当前角色持有的权限列表
-    $auths = request()->auths;
+//    在中间键中得到当前角色持有的权限列表,解决前后端公用异常
+    $auths = request()->auths ?? [];
     //权限判断
     if(!in_array($routeName,$auths)&& request()->username !='admin'){
         return false;
@@ -52,6 +52,15 @@ private function checkAuth(string  $routeName){
         if ($this->checkAuth($routeName)){
             return '<a href="'.route($routeName,$this).'" class="label label-danger radius deluser">删除</a>';
 
+        }
+        return '';
+    }
+
+    //显示按钮，根据ID来显示按钮
+    public function showBtn(string $routeName)
+    {
+        if ($this->checkAuth($routeName)){
+            return '<a href="'.route($routeName,$this).'" class="label label-success radius showBtn">查看</a>';
         }
         return '';
     }

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\FangOwnerRequest;
 use App\Models\FangOwner;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\FangownerExport;
 
 class FangOwnerController extends BaseController
 {
@@ -14,10 +16,15 @@ class FangOwnerController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
+    //房东列表
     public function index()
     {
-        //
-        return 'haha';
+        $excelpath = public_path('/uploads/fangownerexcel/fangowner.xlsx');
+        //判断文件是否纯在
+        $isshow = file_exists($excelpath) ? true : false;
+        //排序和分页
+        $data =FangOwner::orderBy('id','desc')->paginate($this->pagesize);
+        return view('admin.fangowner.index')->with(['data'=>$data,'isshow'=>$isshow]);
     }
 
     /**
@@ -45,15 +52,37 @@ class FangOwnerController extends BaseController
         return redirect(route('admin.fangowner.index'));
     }
 
+    //导出房东Excel
+    public function export()
+    {
+        //导出并下载
+//        return Excel::download(new FangownerExport(),'fangowner.xlsx');
+
+//        导出并保存到服务器指定磁盘中
+        $obj = Excel::store(new FangownerExport(),'fangowner.xlsx','fangownerexcel');
+
+        //返回true/falas
+        dump($obj);
+    }
+
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\FangOwner  $fangOwner
      * @return \Illuminate\Http\Response
      */
-    public function show(FangOwner $fangOwner)
+    //c查看身份证图片
+    public function show(FangOwner $fangowner)
     {
-        //
+        $pics = $fangowner->pic;
+        $picList = explode('#',$pics);
+        if (count($picList) <= 1){
+            return ['status' => 1,'msg' => '没有图片','data' => []];
+        }
+        //去除第一个元素
+        array_shift($picList);
+        return ['status' => 0,'msg'=>'成功','data'=>$picList];
+
     }
 
     /**
