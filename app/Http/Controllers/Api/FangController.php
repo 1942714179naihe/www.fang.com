@@ -48,6 +48,15 @@ class FangController extends Controller
         return ['status'=>0,'msg'=>'完全ojbk狗子','data'=>$data];
     }
 
+    //房源属性列表
+    public function fangAttr(Request $request)
+    {
+        $attrData = Fangattr::all()->toArray();
+
+        $attrData = subTree2($attrData);
+
+        return['status'=>0,'msg'=>'完全ojbk','data'=>$attrData];
+    }
 
 
 }

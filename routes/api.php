@@ -42,4 +42,21 @@ Route::group(['prefix'=>'v1','namespace'=>'Api'],function (){
     //房源列表
     Route::get('fang/detail','FangController@detail');
 
+    //收藏记录
+    Route::get('fang/fav','FavController@fav');
+
+    //是否收藏
+    Route::get('fang/isfav','FavController@isfav');
+
+    // 收藏记录
+    Route::get('fav/list', 'FavController@list');
+
+    // 看房
+    Route::get('fang/can', function () {
+        return ['statuts' => 0, 'msg' => '看房'];
+    });
+
+    // 房源属性
+    Route::get('fang/attr','FangController@fangAttr');
+
 });
