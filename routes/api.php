@@ -2,7 +2,7 @@
 
 // 接口
 
-Route::group(['prefix'=>'v1','namespace'=>'Api'],function (){
+Route::group(['prefix'=>'v1','namespace'=>'Api','middleware'=>['checkapi']],function (){
 
     // 实现小程序的登录
     Route::post('wxlogin','WxloginController@login');
@@ -58,5 +58,9 @@ Route::group(['prefix'=>'v1','namespace'=>'Api'],function (){
 
     // 房源属性
     Route::get('fang/attr','FangController@fangAttr');
+
+
+    //es模糊查询
+    Route::get('fang/search','FangController@search');
 
 });

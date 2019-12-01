@@ -21,7 +21,7 @@ class FangRescource extends JsonResource
             'pic' => $this->fang_pic[0],
             'rent' => $this->fang_rent,
             'area' => $this->fang_build_area,
-
+//            'direction' => Fangattr::where('id', $this->fang_direction)->value('name')
         ];
     }
 }

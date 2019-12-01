@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckApi;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -41,7 +42,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:60,1',
+            'throttle:120,1',
             'bindings',
         ],
     ];
@@ -63,7 +64,10 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'checkadmin' => \App\Http\Middleware\CheckAdmin::class
+        'checkadmin' => \App\Http\Middleware\CheckAdmin::class,
+
+        //接口安全
+        'checkapi' => \App\Http\Middleware\CheckApi::class,
     ];
 
     /**

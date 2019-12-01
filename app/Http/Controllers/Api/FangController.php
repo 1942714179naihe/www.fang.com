@@ -6,6 +6,7 @@ use App\Http\Resources\FangGroupRescourceCollection;
 use App\Http\Resources\FangRescourceCollection;
 use  App\Models\Fang;
 use App\Models\Fangattr;
+use Elasticsearch\ClientBuilder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -33,7 +34,11 @@ class FangController extends Controller
     //房源列表
     public function fanglist(Request $request)
     {
-        $data = Fang::orderBy('id','asc')->paginate(env('PAGESIZE'));
+//        if (!empty($request->get('kw'))){
+//            return $this->search($request);
+//        }
+
+        $data = Fang::orderBy('id','asc')->paginate(10);
         return ['status' => 0,'msg' => 'ok','data'=>new  FangRescourceCollection($data)];
     }
     //房源详情
@@ -56,6 +61,52 @@ class FangController extends Controller
         $attrData = subTree2($attrData);
 
         return['status'=>0,'msg'=>'完全ojbk','data'=>$attrData];
+    }
+
+    //es搜索
+    public function search(Request $request)
+    {
+        //关键词的获取
+        $kw = $request->get('kw');
+
+        if (empty($kw)){
+            $data = Fang::orderBy('id','asc')->paginate(10);
+            return ['status'=>0,'msg'=>'完全OK','data'=>new FangRescourceCollection($data)];
+        }
+
+        //kw有数据
+        $client = ClientBuilder::create()->setHosts(config('es.hosts'))->build();
+        $params = [
+            //索引名称
+            'index' => 'fangs',
+            //查询条件
+            'body' =>[
+                'query' =>[
+                    'match' => [
+                        'desn' => [
+                            'query' => $kw
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        $ret = $client->search($params);
+
+        $total = $ret['hits']['total']['value'];
+
+        if ($total ==0){
+            return ['status' => 6,'msg'=>'没有查到数据哦','data'=>[]];
+        }
+
+        //二维数组中获取指定下标的值，返回一维数组
+        $data = array_column($ret['hits']['hits'],'_id');
+        $data = Fang::whereIn('id',$data)->orderBy('id','asc')->paginate(10);
+
+        return ['status'=>0,'msg'=>'完全OK','data'=>new  FangRescourceCollection($data)];
+
+
+
     }
 
 

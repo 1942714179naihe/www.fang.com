@@ -16,22 +16,21 @@ class FangObserver {
 
     // 添加成功事件
     public function created(Fang $fang){
-        $hosts = config('es.hosts');
-        $client = \Elasticsearch\ClientBuilder::create()->setHosts($hosts)->build();
-        // 写文档
-        $params = [
-            // 索引名称
-            'index' => 'fangs',
-//            'type' => '_doc',
-            // 可以不定义，它会自动给生成
-            'id' => $fang->id,
-            // 文档字段内容
-            'body' => [
-                'xiaoqu' => $fang->fang_xiaoqu,
-                'desn' => $fang->fang_desn,
-            ],
-        ];
-        $client->index($params);
+//        $hosts = config('es.hosts');
+//        $client = \Elasticsearch\ClientBuilder::create()->setHosts($hosts)->build();
+//        // 写文档
+//        $params = [
+//            // 索引名称
+//            'index' => 'fangs',
+//            // 可以不定义，它会自动给生成
+//            'id' => $fang->id,
+//            // 文档字段内容
+//            'body' => [
+//                'xiaoqu' => $fang->fang_xiaoqu,
+//                'desn' => $fang->fang_desn,
+//            ],
+//        ];
+//        $client->index($params);
     }
 
     // 修改之前
